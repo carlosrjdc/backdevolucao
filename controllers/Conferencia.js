@@ -1,8 +1,5 @@
-const serviceRavex = require("./serviceRavex.js");
-const Sequelize = require("sequelize");
 const db = require("../models/index.js");
 const { Op } = require("sequelize");
-const Material = require("../models/Material.js");
 require("dotenv").config();
 
 const conferencia = db.Conferencia;
