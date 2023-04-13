@@ -41,6 +41,22 @@ class EnderecoController {
       return res.status(500).json(erro.message);
     }
   };
+
+  static relacaoNotasFiscaisporDemanda = async (req, res) => {
+    const info = await notaFiscal.findAll({
+      where: {
+        idDemanda: req.params.id,
+      },
+    });
+
+    const arraySimples = info.map((objeto) => objeto.nota_fiscal);
+
+    try {
+      res.status(200).json(info);
+    } catch (erro) {
+      return res.status(500).json(erro.message);
+    }
+  };
 }
 
 module.exports = EnderecoController;

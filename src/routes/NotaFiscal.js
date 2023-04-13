@@ -10,4 +10,9 @@ router.post(
 
 router.get("/infoviagem/:viagem", DemandaNotaFiscal.InformacoesNF);
 
+router.get(
+  "/listarnotaspordemanda/:id",
+  DemandaNotaFiscal.relacaoNotasFiscaisporDemanda
+);
+
 module.exports = router;
