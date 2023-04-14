@@ -23,6 +23,11 @@ router.get(
   ConferenciaController.diferencaoContagem
 );
 
+router.get(
+  "/conferencia/retornoreentrega/:id",
+  ConferenciaController.itensContagemDividoRetornoeReentrega
+);
+
 router.post(
   "/conferencia/addproduto/:id",
   ConferenciaController.addConferencia

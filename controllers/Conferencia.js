@@ -279,6 +279,76 @@ class ConferenciaController {
     }
   };
 
+  static itensContagemDividoRetornoeReentrega = async (req, res) => {
+    const info = await conferencia.findAll({
+      where: {
+        idDemanda: req.params.id,
+      },
+      include: [
+        {
+          model: db.Material,
+          as: "materiais",
+        },
+      ],
+    });
+
+    function somarComBaseEmCriterios(dados, criterio1, criterio2) {
+      let soma = 0;
+      for (const item of dados) {
+        if (item.produto === criterio1 && item.motivo === criterio2) {
+          soma += item.quantidade;
+        }
+      }
+      return soma;
+    }
+
+    const resultadomap = info.map((dado) => {
+      let verMotivo = "";
+      if (dado.motivo === "1" || dado.motivo === "2") {
+        verMotivo = "Devolução";
+      } else if (dado.motivo === "3") {
+        verMotivo = "Reentrega";
+      } else {
+        verMotivo = null;
+      }
+      return {
+        produto: dado.produto,
+        descricao: dado.materiais.descricao,
+        motivo: verMotivo,
+        quantidade: dado.quantidade,
+        nota_fiscal: dado.nota_fiscal,
+      };
+    });
+
+    const validador = [];
+    const resultadoFinal = [];
+
+    const resultado = resultadomap.map((dado) => {
+      const ver = dado.produto + dado.motivo;
+      if (!validador.includes(ver) && dado.motivo !== "") {
+        resultadoFinal.push({
+          material: dado.produto,
+          descricao: dado.descricao,
+          motivo: dado.motivo,
+          quantidade: somarComBaseEmCriterios(
+            resultadomap,
+            dado.produto,
+            dado.motivo
+          ),
+        });
+        validador.push(ver);
+        return { dado };
+      }
+    });
+
+    try {
+      console.log(validador);
+      res.status(200).json(resultadoFinal);
+    } catch (erro) {
+      return res.status(500).json(erro.message);
+    }
+  };
+
   static addConferencia = async (req, res) => {
     const { produto, quantidade, sif, lote } = req.body;
     const info = await conferencia.create({
