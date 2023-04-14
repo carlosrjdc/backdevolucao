@@ -302,6 +302,16 @@ class ConferenciaController {
       return soma;
     }
 
+    function somarComBaseEmCriteriosAvaria(dados, criterio1, criterio2) {
+      let soma = 0;
+      for (const item of dados) {
+        if (item.produto === criterio1 && item.motivo === criterio2) {
+          soma += item.quantidadeAvaria;
+        }
+      }
+      return soma;
+    }
+
     const resultadomap = info.map((dado) => {
       let verMotivo = "";
       if (dado.motivo === "1" || dado.motivo === "2") {
@@ -316,6 +326,7 @@ class ConferenciaController {
         descricao: dado.materiais.descricao,
         motivo: verMotivo,
         quantidade: dado.quantidade,
+        quantidadeAvaria: dado.quantidadeAvaria,
         nota_fiscal: dado.nota_fiscal,
       };
     });
@@ -331,6 +342,11 @@ class ConferenciaController {
           descricao: dado.descricao,
           motivo: dado.motivo,
           quantidade: somarComBaseEmCriterios(
+            resultadomap,
+            dado.produto,
+            dado.motivo
+          ),
+          quantidadeAvaria: somarComBaseEmCriteriosAvaria(
             resultadomap,
             dado.produto,
             dado.motivo
