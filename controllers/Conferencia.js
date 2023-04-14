@@ -327,7 +327,7 @@ class ConferenciaController {
       const ver = dado.produto + dado.motivo;
       if (!validador.includes(ver) && dado.motivo !== "") {
         resultadoFinal.push({
-          material: dado.produto,
+          produto: dado.produto,
           descricao: dado.descricao,
           motivo: dado.motivo,
           quantidade: somarComBaseEmCriterios(
