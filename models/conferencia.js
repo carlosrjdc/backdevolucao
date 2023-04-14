@@ -45,6 +45,9 @@ module.exports = (sequelize, DataTypes) => {
       quantidade: {
         type: DataTypes.INTEGER,
       },
+      quantidadeAvaria: {
+        type: DataTypes.INTEGER,
+      },
       tipo: {
         type: DataTypes.STRING,
       },

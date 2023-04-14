@@ -350,10 +350,11 @@ class ConferenciaController {
   };
 
   static addConferencia = async (req, res) => {
-    const { produto, quantidade, sif, lote } = req.body;
+    const { produto, quantidade, sif, lote, quantidadeAvaria } = req.body;
     const info = await conferencia.create({
       produto,
       quantidade,
+      quantidadeAvaria,
       sif,
       lote,
       tipo: "fisico",
