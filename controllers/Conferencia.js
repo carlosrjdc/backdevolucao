@@ -230,6 +230,7 @@ class ConferenciaController {
           descricao: dado.materiais?.descricao,
           tipo: dado.tipo,
           quantidade: dado.quantidade,
+          quantidadeAvaria: dado.quantidadeAvaria,
         };
       }
     });
@@ -244,15 +245,24 @@ class ConferenciaController {
         const descricao = obj.descricao;
         const tipo = obj.tipo;
         const quantidade = obj.quantidade;
+        const quantidadeAvaria =
+          obj.quantidadeAvaria == null ? 0 : obj.quantidadeAvaria;
 
         if (!contagem.hasOwnProperty(produto)) {
-          contagem[produto] = { tipo1: 0, tipo2: 0, descricao: descricao };
+          contagem[produto] = {
+            tipo1: 0,
+            tipo2: 0,
+            descricao: descricao,
+            verqtd: 0,
+          };
         }
 
         if (tipo === "fisico") {
           contagem[produto].tipo1 += quantidade;
+          contagem[produto].verqtd += quantidadeAvaria;
         } else if (tipo === "contabil") {
           contagem[produto].tipo2 += quantidade;
+          contagem[produto].verqtd += quantidadeAvaria;
         }
       });
 
@@ -266,6 +276,7 @@ class ConferenciaController {
           diferenca: difTipo1Tipo2,
           fisico: contagem[produto].tipo1,
           contabil: contagem[produto].tipo2,
+          avaria: contagem[produto].verqtd,
         });
       }
 
