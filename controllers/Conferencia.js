@@ -378,6 +378,27 @@ class ConferenciaController {
     }
   };
 
+  static BuscarItensdaConferencia = async (req, res) => {
+    const info = await conferencia.findAll({
+      where: {
+        idDemanda: req.params.id,
+      },
+      include: [
+        {
+          model: db.Material,
+          as: "materiais",
+        },
+      ],
+    });
+
+    try {
+      console.log();
+      res.status(200).json(info);
+    } catch (erro) {
+      return res.status(500).json(erro.message);
+    }
+  };
+
   static addConferencia = async (req, res) => {
     const { produto, quantidade, sif, lote, quantidadeAvaria } = req.body;
     const info = await conferencia.create({

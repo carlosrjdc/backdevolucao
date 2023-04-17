@@ -12,6 +12,10 @@ router.get(
   "/conferencia/buscaritensfisicos/:id",
   ConferenciaController.buscarItensDeDemandaFisico
 );
+router.get(
+  "/conferencia/buscaritensconferencia/:id",
+  ConferenciaController.BuscarItensdaConferencia
+);
 
 router.get(
   "/conferencia/buscarlistadetodositensfisicos/:id",
