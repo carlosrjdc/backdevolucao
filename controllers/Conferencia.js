@@ -1,4 +1,5 @@
 const db = require("../models/index.js");
+const { v4: uuidv4 } = require("uuid");
 const { Op } = require("sequelize");
 require("dotenv").config();
 
@@ -362,6 +363,7 @@ class ConferenciaController {
             dado.produto,
             dado.motivo
           ),
+          id: uuidv4(),
         });
         validador.push(ver);
         return { dado };
