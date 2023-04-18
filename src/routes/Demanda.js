@@ -17,10 +17,7 @@ router.post(
   DemandaController.CadatrarProdutosNaDemanda
 );
 
-router.get(
-  "/buscarinfocarro/:datainicial/:datafinal/:nf",
-  DemandaController.buscarInfoViagem
-);
+router.get("/buscarinfocarro/:viagem", DemandaController.buscarInfoViagem);
 
 router.get(
   "/buscardemandaporviagem/:viagem",

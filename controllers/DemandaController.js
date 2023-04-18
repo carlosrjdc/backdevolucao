@@ -99,35 +99,28 @@ class EnderecoController {
   };
 
   static buscarInfoViagem = async (req, res) => {
-    const info = await serviceRavex.periodoLongo(
+    /* const info = await serviceRavex.periodoLongo(
       req.params.datainicial,
       req.params.datafinal,
       req.params.nf
     );
 
     console.log(info);
+*/
 
-    const filtro = async () => {
-      if (info !== "não localizado") {
-        const listarNotas = await serviceRavex.buscainfonf(info[0].viagemId);
+    const listarNotas = await serviceRavex.buscainfonf(req.params.viagem);
 
-        const filtrado = await listarNotas?.filter(
-          (filtrar) =>
-            filtrar.status === "Devolução total" ||
-            filtrar.status === "Devolução parcial" ||
-            filtrar.status === "Reentrega"
-        );
+    const filtrado = await listarNotas?.filter(
+      (filtrar) =>
+        filtrar.status === "Devolução total" ||
+        filtrar.status === "Devolução parcial" ||
+        filtrar.status === "Reentrega"
+    );
 
-        return filtrado;
-      } else {
-        return "Fora do intervalo de data selecionado";
-      }
-    };
-
-    const dadosFinal = await filtro();
+    console.log(listarNotas);
 
     try {
-      res.status(200).json(dadosFinal);
+      res.status(200).json(filtrado);
     } catch (erro) {
       return res.status(500).json(erro.message);
     }
